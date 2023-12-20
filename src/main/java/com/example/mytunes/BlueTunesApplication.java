@@ -7,12 +7,12 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class HelloApplication extends Application {
+public class BlueTunesApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("MyTunes.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
-        stage.setTitle("Hello!");
+        FXMLLoader fxmlLoader = new FXMLLoader(BlueTunesApplication.class.getResource("BlueTunes afspiller.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        stage.setTitle("Blue Tunes");
         stage.setScene(scene);
         stage.show();
     }

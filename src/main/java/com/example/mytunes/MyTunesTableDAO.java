@@ -1,10 +1,14 @@
 package com.example.mytunes;
 
+import javafx.collections.ObservableList;
+
 import java.util.List;
 
 public interface MyTunesTableDAO {
 
-    List<MyTunesTable> getallsongs();
+  public void  getallsongs(ObservableList<Song> SongTableData);
+
+
 
 
 

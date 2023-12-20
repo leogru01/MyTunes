@@ -1,12 +1,11 @@
 package com.example.mytunes;
 
+import javafx.collections.ObservableList;
+
 import java.util.List;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 public class MyTunesTableDAOImp implements MyTunesTableDAO{
 
@@ -16,46 +15,51 @@ public class MyTunesTableDAOImp implements MyTunesTableDAO{
         {
             // Opretter forbindelse til vores database
 
-            con = DriverManager.getConnection("jdbc:sqlserver://EASV-DB4:1433;database=NyDB;userName=CSe2023t_t_7;password=CSe2023tT7#23;encrypt=false;trustServerCertificate=true");
+            con = DriverManager.getConnection("jdbc:sqlserver://10.176.111.34:1433;database=NyDB;userName=CSe2023t_t_7;password=CSe2023tT7#23;encrypt=false;trustServerCertificate=true");
 
         } catch (SQLException e){
-            System.err.println("can not create connection" + e.getMessage());
+            System.err.println("Kan ikke skabe forbindelse: " + e.getMessage());
         }
         System.out.println("  ");
     }
 
-    @Override
-    public List<MyTunesTable> getallsongs() {
-        List<MyTunesTable> songs = new ArrayList<>();
+    public void getallsongs(ObservableList<Song> SongTableData) {
+        List<Song> songs = new ArrayList<>();
+        SongTableData.clear();
 
         try  {
+        Statement db = con.createStatement();
+        String sql = "select * from MyTunesTable";
 
-       PreparedStatement ps = con.prepareStatement("select * from MyTunesTable");
+       ResultSet rs = db.executeQuery(sql);
 
-       ResultSet rs = ps.executeQuery();
-
-       MyTunesTable mtt;
+        System.out.println("Sql ok");
 
        while (rs.next()) {
+            System.out.println("fundet rk");
 
+           String artistname = rs.getString("artist");
 
-           String artistname = rs.getString(1);
+           String songname = rs.getString("Songname");
 
-           String songname = rs.getString(2);
+           String duration = rs.getString("duration");
 
-           String duration = rs.getString(3);
+           String genre = rs.getString("genre");
 
-           String genre = rs.getString(4);
+           Song song = new Song (artistname,songname,duration); //,genre);
 
-           mtt = new MyTunesTable(artistname,songname,duration,genre);
+           System.out.println("rk:" + song.toString());
 
-           songs.add(mtt);
+           SongTableData.add(song);
         }
 
         }
         catch (SQLException e){
 
         }
-        return songs;
+
     }
-}
+
+
+    }
+
